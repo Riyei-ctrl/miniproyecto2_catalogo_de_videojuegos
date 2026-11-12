@@ -108,3 +108,21 @@ def cargar_dataset(ruta_archivo=None, genero_objetivo="Action", limite=11000):
                         break
                 except ValueError:
                     continue
+    print(f"\nCarga completa: {contador} juegos del genero '{genero_objetivo}' insertados.")
+    print(f"  - ABB por AppID   : {contador} nodos")
+    print(f"  - ABB por Nombre  : {contador} nodos (para inorden alfabetico sin sorted)")
+    print(f"  - AVL por AppID   : {contador} nodos (rebalanceado, O(log n))")
+    print(f"  - AVL por Precio  : nodos construidos con encadenamiento")
+    print(f"  - Lista Monticulo : {len(lista_juegos)} elementos listos")
+
+    return {
+        'abb_appid': arbol_abb_appid,
+        'abb_nombres': arbol_abb_nombres,
+        'avl_appid': arbol_avl_appid,
+        'avl_precios': arbol_avl_precios,
+        'lista': lista_juegos
+    }
+
+
+def cargar_dataset_csv(ruta_archivo=None, genero_objetivo="Action", limite=11000):
+    return cargar_dataset(ruta_archivo, genero_objetivo, limite)
