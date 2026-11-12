@@ -41,3 +41,23 @@ def verificar_invariante_abb(nodo, minimo=None, maximo=None):
 
     return (verificar_invariante_abb(nodo.izq, minimo, nodo.clave) and
             verificar_invariante_abb(nodo.der, nodo.clave, maximo))
+
+def verificar_invariante_heap(heap):
+    """
+    Verifica la propiedad min-heap: cada padre tiene prioridad <= que sus hijos.
+    Recibe el arreglo interno del montículo.
+    """
+    n = len(heap)
+    for i in range(n):
+        hijo_izq = 2 * i + 1
+        hijo_der = 2 * i + 2
+
+        if hijo_izq < n and heap[i][0] > heap[hijo_izq][0]:
+            print(f"Error de invariante Heap: Padre indice {i} (prioridad {heap[i][0]}) > Hijo izq indice {hijo_izq} (prioridad {heap[hijo_izq][0]})")
+            return False
+
+        if hijo_der < n and heap[i][0] > heap[hijo_der][0]:
+            print(f"Error de invariante Heap: Padre indice {i} (prioridad {heap[i][0]}) > Hijo der indice {hijo_der} (prioridad {heap[hijo_der][0]})")
+            return False
+
+    return True
