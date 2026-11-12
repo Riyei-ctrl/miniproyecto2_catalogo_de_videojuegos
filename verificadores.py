@@ -61,3 +61,22 @@ def verificar_invariante_heap(heap):
             return False
 
     return True
+
+def verificar_invariante_abb(nodo, minimo=None, maximo=None):
+    """
+    Verifica que el subárbol cumple la propiedad de orden del ABB:
+    todas las claves del subárbol izquierdo < clave < todas las claves del subárbol derecho.
+    """
+    if nodo is None:
+        return True
+
+    if minimo is not None and nodo.clave <= minimo:
+        print(f"Error de invariante ABB: Nodo {nodo.clave} viola el limite inferior {minimo}")
+        return False
+
+    if maximo is not None and nodo.clave >= maximo:
+        print(f"Error de invariante ABB: Nodo {nodo.clave} viola el limite superior {maximo}")
+        return False
+
+    return (verificar_invariante_abb(nodo.izq, minimo, nodo.clave) and
+            verificar_invariante_abb(nodo.der, nodo.clave, maximo))
