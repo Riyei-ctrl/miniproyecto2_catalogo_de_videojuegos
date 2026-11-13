@@ -9,4 +9,34 @@ class NodoABB:
         self.datos = datos
         self.izq = None
         self.der = None
-        self.padre = padre  # Requisito de los principios de trabajo
+        self.padre = padre  
+
+class ABB:
+    """Árbol Binario de Búsqueda para el Catálogo de Videojuegos."""
+    def _init_(self):
+        self.raiz = None
+
+    def insertar(self, clave, datos):
+        """Inserción iterativa para evitar desbordamiento de pila en árboles degenerados."""
+        nuevo_nodo = NodoABB(clave, datos)
+        if self.raiz is None:
+            self.raiz = nuevo_nodo
+            return
+
+        actual = self.raiz
+        padre = None
+        while actual is not None:
+            padre = actual
+            if clave == actual.clave:
+                # Política de claves: Rechazar duplicados para AppID
+                return 
+            elif clave < actual.clave:
+                actual = actual.izq
+            else:
+                actual = actual.der
+
+        nuevo_nodo.padre = padre
+        if clave < padre.clave:
+            padre.izq = nuevo_nodo
+        else:
+            padre.der = nuevo_nodo        
