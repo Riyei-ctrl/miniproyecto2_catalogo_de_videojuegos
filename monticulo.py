@@ -110,4 +110,38 @@ class MinHeap:
             raise ValueError("La nueva prioridad debe ser estrictamente mayor que la actual.")
 
         self.heap[i][0] = nueva_prioridad
-        self.hundir(i)               
+        self.hundir(i)   
+
+    @staticmethod
+    def heapsort(arreglo):
+        """
+        Implementa Heapsort in situ sobre un arreglo de números/elementos.
+        (Banco de preguntas de defensa oral individual).
+        """
+        n = len(arreglo)
+
+        # Función auxiliar para hundir en arreglo arbitrario
+        def _hundir_arr(arr, tamanio, i):
+            mayor = i
+            izq = 2 * i + 1
+            der = 2 * i + 2
+
+            if izq < tamanio and arr[izq] > arr[mayor]:
+                mayor = izq
+            if der < tamanio and arr[der] > arr[mayor]:
+                mayor = der
+
+            if mayor != i:
+                arr[i], arr[mayor] = arr[mayor], arr[i]
+                _hundir_arr(arr, tamanio, mayor)
+
+        # 1. Construir max-heap in situ (de abajo hacia arriba)
+        for i in range(n // 2 - 1, -1, -1):
+            _hundir_arr(arreglo, n, i)
+
+        # 2. Extraer elementos uno a uno intercambiando raíz con el final
+        for i in range(n - 1, 0, -1):
+            arreglo[0], arreglo[i] = arreglo[i], arreglo[0]
+            _hundir_arr(arreglo, i, 0)
+
+        return arreglo                
