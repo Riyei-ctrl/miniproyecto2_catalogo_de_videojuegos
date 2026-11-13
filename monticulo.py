@@ -31,7 +31,6 @@ class MinHeap:
     def hundir(self, i):
         """
         Baja un elemento si su prioridad es mayor que la de sus hijos.
-        (Sift-Down)
         """
         minimo = i
         izq = self._hijo_izq(i)
@@ -99,7 +98,6 @@ class MinHeap:
         """
         Aumenta el valor de prioridad de un elemento existente,
         haciendo que baje en el montículo (disminuye su urgencia).
-        (Operación simétrica de decrementar clave - Banco de defensa oral).
         """
         if clave not in self.posiciones:
             raise KeyError("La clave no existe en el montículo.")
@@ -116,7 +114,6 @@ class MinHeap:
     def heapsort(arreglo):
         """
         Implementa Heapsort in situ sobre un arreglo de números/elementos.
-        (Banco de preguntas de defensa oral individual).
         """
         n = len(arreglo)
 
@@ -135,11 +132,11 @@ class MinHeap:
                 arr[i], arr[mayor] = arr[mayor], arr[i]
                 _hundir_arr(arr, tamanio, mayor)
 
-        # 1. Construir max-heap in situ (de abajo hacia arriba)
+        # Construir max-heap in situ (de abajo hacia arriba)
         for i in range(n // 2 - 1, -1, -1):
             _hundir_arr(arreglo, n, i)
 
-        # 2. Extraer elementos uno a uno intercambiando raíz con el final
+        #Extraer elementos uno a uno intercambiando raíz con el final
         for i in range(n - 1, 0, -1):
             arreglo[0], arreglo[i] = arreglo[i], arreglo[0]
             _hundir_arr(arreglo, i, 0)
