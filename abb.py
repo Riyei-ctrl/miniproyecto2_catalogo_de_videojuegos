@@ -59,4 +59,29 @@ class ABB:
         """Encuentra el nodo más a la derecha."""
         while nodo.der is not None:
             nodo = nodo.der
-        return nodo            
+        return nodo       
+
+    def sucesor(self, nodo):
+        """Encuentra el sucesor inorden utilizando el apuntador al padre."""
+        if nodo.der is not None:
+            return self.minimo(nodo.der)
+        
+        padre = nodo.padre
+        while padre is not None and nodo == padre.der:
+            nodo = padre
+            padre = padre.padre
+        return padre
+
+    def predecesor(self, nodo):
+        """
+        Encuentra el predecesor inorden utilizando el apuntador al padre.
+        (Operación simétrica del sucesor - Banco de preguntas de defensa oral).
+        """
+        if nodo.izq is not None:
+            return self.maximo(nodo.izq)
+
+        padre = nodo.padre
+        while padre is not None and nodo == padre.izq:
+            nodo = padre
+            padre = padre.padre
+        return padre         
