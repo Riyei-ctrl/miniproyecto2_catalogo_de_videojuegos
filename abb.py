@@ -142,4 +142,36 @@ class ABB:
             u.padre.der = v
             
         if v is not None:
-            v.padre = u.padre         
+            v.padre = u.padre   
+
+    def eliminar(self, nodo_z):
+        """
+        Elimina el nodo_z del ABB manejando los tres casos clásicos
+        y realizando la sustitución por el sucesor cuando es necesario.
+        """
+        if nodo_z is None:
+            return
+
+        # Caso 1: El nodo no tiene hijo izquierdo (cubre también el caso de ser hoja)
+        if nodo_z.izq is None:
+            self.transplant(nodo_z, nodo_z.der)
+            
+        # Caso 2: El nodo no tiene hijo derecho
+        elif nodo_z.der is None:
+            self.transplant(nodo_z, nodo_z.izq)
+            
+        # Caso 3: El nodo tiene dos hijos
+        else:
+            # Encontrar el sucesor (el mínimo del subárbol derecho)
+            nodo_y = self.minimo(nodo_z.der)
+            
+            # Si el sucesor no es hijo directo de z, lo reemplazamos por su propio hijo derecho
+            if nodo_y.padre != nodo_z:
+                self.transplant(nodo_y, nodo_y.der)
+                nodo_y.der = nodo_z.der
+                nodo_y.der.padre = nodo_y
+                
+            # Reemplazar z por el sucesor y
+            self.transplant(nodo_z, nodo_y)
+            nodo_y.izq = nodo_z.izq
+            nodo_y.izq.padre = nodo_y              
