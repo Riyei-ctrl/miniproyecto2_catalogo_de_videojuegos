@@ -75,7 +75,6 @@ class ABB:
     def predecesor(self, nodo):
         """
         Encuentra el predecesor inorden utilizando el apuntador al padre.
-        (Operación simétrica del sucesor - Banco de preguntas de defensa oral).
         """
         if nodo.izq is not None:
             return self.maximo(nodo.izq)
@@ -84,4 +83,63 @@ class ABB:
         while padre is not None and nodo == padre.izq:
             nodo = padre
             padre = padre.padre
-        return padre         
+        return padre  
+
+    def obtener_altura_abb(self, nodo):
+        """
+        Calcula recursivamente la altura máxima de un subárbol en el ABB.
+        Sirve para demostrar la degeneración O(n) frente al AVL.
+        """
+        if nodo is None:
+            return 0
+            
+        altura_izq = self.obtener_altura_abb(nodo.izq)
+        altura_der = self.obtener_altura_abb(nodo.der)
+        
+        return 1 + max(altura_izq, altura_der)
+
+    # RECORRIDOS
+    def inorden(self, nodo, resultado=None):
+        """Visita: Izquierda, Raíz, Derecha"""
+        if resultado is None:
+            resultado = []
+        if nodo is not None:
+            self.inorden(nodo.izq, resultado)
+            resultado.append(nodo)
+            self.inorden(nodo.der, resultado)
+        return resultado
+
+    def preorden(self, nodo, resultado=None):
+        """Visita: Raíz, Izquierda, Derecha."""
+        if resultado is None:
+            resultado = []
+        if nodo is not None:
+            resultado.append(nodo)
+            self.preorden(nodo.izq, resultado)
+            self.preorden(nodo.der, resultado)
+        return resultado
+
+    def postorden(self, nodo, resultado=None):
+        """Visita: Izquierda, Derecha, Raíz."""
+        if resultado is None:
+            resultado = []
+        if nodo is not None:
+            self.postorden(nodo.izq, resultado)
+            self.postorden(nodo.der, resultado)
+            resultado.append(nodo)
+        return resultado
+
+    def transplant(self, u, v):
+        """
+        Reemplaza el subárbol con raíz en 'u' por el subárbol con raíz en 'v'.
+        Actualiza correctamente los apuntadores al padre.
+        """
+        if u.padre is None:
+            self.raiz = v
+        elif u == u.padre.izq:
+            u.padre.izq = v
+        else:
+            u.padre.der = v
+            
+        if v is not None:
+            v.padre = u.padre         
