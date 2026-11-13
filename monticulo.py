@@ -59,4 +59,38 @@ class MinHeap:
         indice_actual = len(self.heap) - 1
         self.posiciones[clave] = indice_actual
         
-        self.flotar(indice_actual)               
+        self.flotar(indice_actual)   
+
+    def extraer_minimo(self):
+        """Extrae el juego de mayor prioridad (mínimo valor) y reordena el montículo."""
+        if not self.heap:
+            return None
+
+        minimo_extraido = self.heap[0]
+        del self.posiciones[minimo_extraido[1]] # Eliminar del rastreador
+
+        if len(self.heap) > 1:
+            # Movemos el último elemento a la raíz y lo hundimos
+            self.heap[0] = self.heap.pop()
+            self.posiciones[self.heap[0][1]] = 0
+            self.hundir(0)
+        else:
+            self.heap.pop()
+
+        return minimo_extraido
+
+    def decrementar_clave(self, clave, nueva_prioridad):
+        """
+        Reduce el valor de prioridad de un elemento existente,
+        haciendo que suba en el montículo (aumenta su urgencia).
+        """
+        if clave not in self.posiciones:
+            raise KeyError("La clave no existe en el montículo.")
+            
+        i = self.posiciones[clave]
+        
+        if nueva_prioridad > self.heap[i][0]:
+            raise ValueError("La nueva prioridad debe ser estrictamente menor que la actual.")
+            
+        self.heap[i][0] = nueva_prioridad
+        self.flotar(i)                
