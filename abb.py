@@ -39,4 +39,24 @@ class ABB:
         if clave < padre.clave:
             padre.izq = nuevo_nodo
         else:
-            padre.der = nuevo_nodo        
+            padre.der = nuevo_nodo    
+
+    def buscar(self, nodo, clave):
+        """Búsqueda recursiva estándar."""
+        if nodo is None or clave == nodo.clave:
+            return nodo
+        if clave < nodo.clave:
+            return self.buscar(nodo.izq, clave)
+        return self.buscar(nodo.der, clave)
+
+    def minimo(self, nodo):
+        """Encuentra el nodo más a la izquierda."""
+        while nodo.izq is not None:
+            nodo = nodo.izq
+        return nodo
+
+    def maximo(self, nodo):
+        """Encuentra el nodo más a la derecha."""
+        while nodo.der is not None:
+            nodo = nodo.der
+        return nodo            
