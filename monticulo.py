@@ -93,4 +93,21 @@ class MinHeap:
             raise ValueError("La nueva prioridad debe ser estrictamente menor que la actual.")
             
         self.heap[i][0] = nueva_prioridad
-        self.flotar(i)                
+        self.flotar(i)     
+
+    def incrementar_clave(self, clave, nueva_prioridad):
+        """
+        Aumenta el valor de prioridad de un elemento existente,
+        haciendo que baje en el montículo (disminuye su urgencia).
+        (Operación simétrica de decrementar clave - Banco de defensa oral).
+        """
+        if clave not in self.posiciones:
+            raise KeyError("La clave no existe en el montículo.")
+
+        i = self.posiciones[clave]
+
+        if nueva_prioridad < self.heap[i][0]:
+            raise ValueError("La nueva prioridad debe ser estrictamente mayor que la actual.")
+
+        self.heap[i][0] = nueva_prioridad
+        self.hundir(i)               
