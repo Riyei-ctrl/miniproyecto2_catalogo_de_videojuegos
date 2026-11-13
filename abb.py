@@ -196,4 +196,41 @@ class ABB:
         if nodo.clave < b:
             self.rango(nodo.der, a, b, resultado)
 
-        return resultado                
+        return resultado  
+
+    def recorrido_por_niveles(self):
+        """
+        Recorre el árbol por niveles (amplitud o BFS) usando una cola FIFO.
+        """
+        if self.raiz is None:
+            return []
+
+        resultado = []
+        cola = [self.raiz]
+        while cola:
+            actual = cola.pop(0)
+            resultado.append(actual)
+            if actual.izq is not None:
+                cola.append(actual.izq)
+            if actual.der is not None:
+                cola.append(actual.der)
+        return resultado
+
+    def inorden_iterativo(self):
+        """
+        Recorrido inorden iterativo mediante una pila explícita (LIFO).
+        """
+        resultado = []
+        pila = []
+        actual = self.raiz
+
+        while actual is not None or pila:
+            while actual is not None:
+                pila.append(actual)
+                actual = actual.izq
+
+            actual = pila.pop()
+            resultado.append(actual)
+            actual = actual.der
+
+        return resultado                  
