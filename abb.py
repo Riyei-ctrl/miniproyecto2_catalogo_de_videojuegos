@@ -174,4 +174,26 @@ class ABB:
             # Reemplazar z por el sucesor y
             self.transplant(nodo_z, nodo_y)
             nodo_y.izq = nodo_z.izq
-            nodo_y.izq.padre = nodo_y              
+            nodo_y.izq.padre = nodo_y      
+
+    
+    def rango(self, nodo, a, b, resultado=None):
+        """
+        Consulta por rango [a, b] en el ABB podando ramas
+        que no pueden contener resultados.
+        """
+        if resultado is None:
+            resultado = []
+        if nodo is None:
+            return resultado
+
+        if nodo.clave > a:
+            self.rango(nodo.izq, a, b, resultado)
+
+        if a <= nodo.clave <= b:
+            resultado.append(nodo)
+
+        if nodo.clave < b:
+            self.rango(nodo.der, a, b, resultado)
+
+        return resultado                
