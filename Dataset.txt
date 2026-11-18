@@ -1,0 +1,9 @@
+Acceso al dataset de Steam:
+https://huggingface.co/datasets/FronkonGames/steam-games-dataset
+
+Instrucciones de descarga:
+	1. Ir al apartado "Files and versions"
+	2. En el apartado "Files and version" entrar a la carpeta de nombre data
+	3. En la carpeta de nombre data descargar el archivo llamado "train-00000-of-00001.parquet"
+	4. Agregar una carpeta llamada "data" en la misma carpeta donde se tienen los archivos .py con el
+	archivo dentro
